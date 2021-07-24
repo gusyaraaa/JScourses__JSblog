@@ -10,9 +10,7 @@ class ApiService {
         body: JSON.stringify(post),
       });
 
-      const response = await fetch(request);
-
-      return await response.json();
+      return useRequest(request);
     } catch (error) {
       console.error(error);
     }
@@ -24,13 +22,29 @@ class ApiService {
         method: "get",
       });
 
-      const response = await fetch(request);
-
-      return await response.json();
+      return useRequest(request);
     } catch (error) {
       console.error(error);
     }
   }
+
+  async fetchPostById(id) {
+    try {
+      const request = new Request(this.url + `/posts/${id}.json`, {
+        method: "get",
+      });
+
+      return useRequest(request);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+}
+
+async function useRequest(request) {
+  const response = await fetch(request);
+
+  return await response.json();
 }
 
 export const apiService = new ApiService(
